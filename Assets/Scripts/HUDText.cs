@@ -14,7 +14,7 @@ public class HUDText : Singleton<HUDText>
     public FpsCounterAnchorPositions AnchorPosition = FpsCounterAnchorPositions.TopRight;
 
     private string htmlColorTag;
-    private const string hudLabel = "{0}</color> AXIS";
+    private const string hudLabel = "{0}</color>";
 
     private TextMeshPro m_TextMeshPro;
     private Transform m_frameCounter_transform;

@@ -46,7 +46,7 @@ public class Interactible : MonoBehaviour
     {
         for (int i = 0; i < defaultMaterials.Length; i++)
         {
-            defaultMaterials[i].SetFloat("_Highlight", .25f);
+            defaultMaterials[i].SetFloat("_Highlight", .1f);
         }
     }
 
@@ -70,5 +70,13 @@ public class Interactible : MonoBehaviour
         {
             audioSource.Play();
         }
+
+        StartCoroutine(Blink());
+    }
+
+    IEnumerator Blink()
+    {
+        yield return new WaitForSeconds(.25f);
+        GazeExited();
     }
 }

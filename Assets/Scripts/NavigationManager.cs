@@ -161,6 +161,15 @@ public class NavigationManager : Singleton<NavigationManager>
 
         newRecognizer.StartCapturingGestures();
         ActiveRecognizer = newRecognizer;
+
+        if (ActiveRecognizer == NavigationRecognizer)
+        {
+            HUDText.Instance.axislabel = "Rotate Mode";
+        }
+        else
+        {
+            HUDText.Instance.axislabel = "Move Mode";
+        }
     }
 
 }

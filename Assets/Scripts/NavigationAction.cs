@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class NavigationAction : MonoBehaviour {
     [Tooltip("Rotation max speed controls amount of rotation.")]
-    public float RotationSensitivity = 10.0f;
+    public float RotationSensitivity = 100.0f;
     public float MoveSensitivity = 2f;
 
     public enum RotationAxis { X, Y, Z }
@@ -15,6 +15,18 @@ public class NavigationAction : MonoBehaviour {
 
     private int nextAxis = 0;
     private Vector3 manipulationPreviousPosition;
+
+    private void Start()
+    {
+        if (GazeManager.Instance.FocusedGameObject != null)
+        {
+            HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "X");
+        }
+        else
+        {
+            HUDText.Instance.axislabel = string.Format("{0}", "NONE");
+        }
+    }
 
     void Update()
     {
@@ -32,15 +44,15 @@ public class NavigationAction : MonoBehaviour {
         switch (rotationAxis)
         {
             case RotationAxis.X:
-                HUDText.Instance.axislabel = string.Format("{0} {1} {2} deg", gameObject.name, "X", rotationFactor);
+                HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "X");
                 transform.Rotate(rotationFactor, 0, 0);
                 break;
             case RotationAxis.Y:
-                HUDText.Instance.axislabel = string.Format("{0} {1} {2} deg", gameObject.name, "Y", rotationFactor);
+                HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "Y");
                 transform.Rotate(0, rotationFactor, 0);
                 break;
             case RotationAxis.Z:
-                HUDText.Instance.axislabel = string.Format("{0} {1} {2} deg", gameObject.name, "Z", rotationFactor);
+                HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "Z");
                 transform.Rotate(0, 0, rotationFactor);
                 break;
         }
