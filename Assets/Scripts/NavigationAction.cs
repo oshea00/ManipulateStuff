@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Button tap feedback
 // TODO: Menu tagalong...
 
 public class NavigationAction : MonoBehaviour {
