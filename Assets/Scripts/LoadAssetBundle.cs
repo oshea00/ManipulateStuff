@@ -26,8 +26,11 @@ public class LoadAssetBundle : MonoBehaviour {
         var gameObject = bundle.LoadAsset<GameObject>(objectName);
         _gameObject = Instantiate(gameObject);
         var childTransform = _gameObject.transform.Find("default");
-        childTransform.gameObject.AddComponent<NavigationAction>();
+        childTransform.gameObject.AddComponent<NavigationAction>().RotationSensitivity = 100f;
         childTransform.gameObject.AddComponent<Interactible>();
+#if UNITY_EDITOR
+        childTransform.gameObject.AddComponent<MouseLook>();
+#endif
         Material newMat = Resources.Load("Blue", typeof(Material)) as Material;
         var renderer = childTransform.gameObject.GetComponent<Renderer>();
         renderer.material = newMat;

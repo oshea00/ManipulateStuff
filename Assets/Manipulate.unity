@@ -158,8 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HandDetectedAsset: {fileID: 1000013579737340, guid: 8557f916d161c554f9b5a62e90ca1a94,
     type: 2}
-  ScrollDetectedAsset: {fileID: 1000011496978826, guid: 49554dd136b503241a642f28b940de68,
-    type: 2}
+  ScrollDetectedAsset: {fileID: 0}
   PathingDetectedAsset: {fileID: 1000012994708280, guid: 9be60755951057440a2bf0a68bb9e6ef,
     type: 2}
   FeedbackParent: {fileID: 170622637}
@@ -514,7 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d7f063f796bbb4ba0ad061315ddc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bundleUri: http://10.0.5.132:8089/remote
+  bundleUri: http://192.168.86.43:8089/remote
   objectName: ltas2
   position: {x: -1, y: 0, z: 3}
   rotation: {x: -70, y: 180, z: 0}
@@ -671,6 +670,7 @@ GameObject:
   - component: {fileID: 670928960}
   - component: {fileID: 670928959}
   - component: {fileID: 670928958}
+  - component: {fileID: 670928962}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -708,7 +708,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.85
+  near clip plane: 0.35
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -740,6 +740,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &670928962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670928957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b9adb6df4ac444d936a8f2ad2d73ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateInterval: 0
+  axislabel: NONE
+  AnchorPosition: 2
 --- !u!4 &892940223 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 07c2c0e2d5648d5408762cacf0946361, type: 3}
@@ -835,7 +849,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 07c2c0e2d5648d5408762cacf0946361, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.002352
+      value: -0.025
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 07c2c0e2d5648d5408762cacf0946361, type: 3}
       propertyPath: m_LocalRotation.x
@@ -999,6 +1013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationSensitivity: 10
+  MoveSensitivity: 2
   rotationAxis: 0
 --- !u!114 &1310205876
 MonoBehaviour:
@@ -1032,7 +1047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1952754579
 Transform:
   m_ObjectHideFlags: 0

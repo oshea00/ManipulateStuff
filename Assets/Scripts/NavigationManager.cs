@@ -15,15 +15,14 @@ public class NavigationManager : Singleton<NavigationManager>
     public Vector3 NavigationPosition { get; private set; }
     public bool IsManipulating { get; private set; }
     public Vector3 ManipulationPosition { get; private set; }
+    public float NavigationSpeed;
+    private float lastLocation;
 
     void Awake()
     {
         NavigationRecognizer = new GestureRecognizer();
         NavigationRecognizer.SetRecognizableGestures(
             GestureSettings.NavigationX |
-            GestureSettings.NavigationY |
-            GestureSettings.NavigationZ |
-            GestureSettings.ManipulationTranslate |
             GestureSettings.Tap
             );
 
@@ -69,11 +68,14 @@ public class NavigationManager : Singleton<NavigationManager>
         IsNavigating = true;
         IsManipulating = false;
         NavigationPosition = Vector3.zero;
+        lastLocation = 0;
         Debug.Log("Rotation Navigation Started");
     }
 
     private void NavigationRecognizer_NavigationUpdated(NavigationUpdatedEventArgs obj)
     {
+        NavigationSpeed = obj.normalizedOffset.x - lastLocation;
+        lastLocation = obj.normalizedOffset.x;
         NavigationPosition = obj.normalizedOffset;
         Debug.Log("Rotation Navigation Updated");
     }
