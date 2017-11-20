@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // TODO: Popup info graphic triggered by proximity to a given object point
-// TODO: Send transforms to SA
-// TODO: SA Sends instrument location to Hololens
+// TODO: Populate feature points on unity 3D ltas2 asset
+// TODO: Use surface mesh to raycast tracker location to SA
 // TODO: Display tracker in Hololens world
 // TODO: Menu command to level current active rotation axis
+// TODO: Retrieve adjusted dx,dy,dz,drx,dry,drz values from SA and update unity model transform
 
 public class NavigationAction : MonoBehaviour {
     [Tooltip("Rotation max speed controls amount of rotation.")]
