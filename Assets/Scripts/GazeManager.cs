@@ -22,9 +22,14 @@ public class GazeManager : Singleton<GazeManager>
     public RaycastHit HitInfo { get; private set; }
 
     /// <summary>
-    /// Position of the user's gaze.
+    /// Position of the user's gaze in World.
     /// </summary>
     public Vector3 Position { get; private set; }
+
+    /// <summary>
+    /// Postion of the user's gave on Focused object in local frame.
+    /// </summary>
+    public Vector3 LocalPosition { get; private set; }
 
     /// <summary>
     /// RaycastHit Normal direction.
@@ -34,8 +39,9 @@ public class GazeManager : Singleton<GazeManager>
     public GameObject FocusedGameObject { get; private set; }
 
     private GazeStabilizer gazeStabilizer;
-    private Vector3 gazeOrigin;
-    private Vector3 gazeDirection;
+    public Vector3 GazeOrigin;
+    public Vector3 GazeDirection;
+    public Vector3 GazeAngles;
 
     void Awake()
     {
@@ -44,10 +50,11 @@ public class GazeManager : Singleton<GazeManager>
 
     private void Update()
     {
-        gazeOrigin = Camera.main.transform.position;
-        gazeDirection = Camera.main.transform.forward;
-        gazeStabilizer.UpdateHeadStability(gazeOrigin, Camera.main.transform.rotation);
-        gazeOrigin = gazeStabilizer.StableHeadPosition;
+        GazeOrigin = Camera.main.transform.position;
+        GazeDirection = Camera.main.transform.forward;
+        GazeAngles = Camera.main.transform.eulerAngles;
+        gazeStabilizer.UpdateHeadStability(GazeOrigin, Camera.main.transform.rotation);
+        GazeOrigin = gazeStabilizer.StableHeadPosition;
         UpdateRaycast();
         if (Hit)
         {
@@ -78,17 +85,19 @@ public class GazeManager : Singleton<GazeManager>
     private void UpdateRaycast()
     {
         RaycastHit hitInfo;
-        Hit = Physics.Raycast(gazeOrigin, gazeDirection, out hitInfo, MaxGazeDistance, RaycastLayerMask);
+        Hit = Physics.Raycast(GazeOrigin, GazeDirection, out hitInfo, MaxGazeDistance, RaycastLayerMask);
         HitInfo = hitInfo;
         if (Hit)
         {
             Position = HitInfo.point;
+            LocalPosition = HitInfo.collider.gameObject.transform.InverseTransformPoint(Position);
             Normal = HitInfo.normal;
         }
         else
         {
-            Position = gazeOrigin + (MaxGazeDistance * gazeDirection);
-            Normal = gazeDirection;
+            Position = GazeOrigin + (MaxGazeDistance * GazeDirection);
+            LocalPosition = Vector3.zero;
+            Normal = GazeDirection;
         }
     }
 }

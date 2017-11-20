@@ -8,6 +8,7 @@ public class CommandRotate : MonoBehaviour {
         if (GazeManager.Instance.FocusedGameObject == gameObject)
         {
             NavigationManager.Instance.Transition(NavigationManager.Instance.NavigationRecognizer);
+            NavigationManager.Instance.SendCoordinates = false;
             Debug.Log("Rotate Selected");
         }
     }

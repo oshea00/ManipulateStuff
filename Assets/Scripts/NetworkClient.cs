@@ -10,17 +10,21 @@ using Windows.Networking;
 using Windows.Networking.Sockets;
 #endif
 
-public class NetworkClient : MonoBehaviour {
-    public static string sendMessage;
-    public static string rcvdMessage;
+public class NetworkClient : Singleton<NetworkClient> {
+    public static string sendMessage="";
+    public static string rcvdMessage="";
 
     public int pollSeconds = 1;
     public string HostIP = "10.0.5.132";
     public string HostPort = "8088";
+    public bool startSendLoop = false;
 
     private void Start()
     {
-        StartCoroutine(ExchangeMessage());
+        if (startSendLoop)
+        {
+            StartCoroutine(ExchangeMessage());
+        }
     }
 
     IEnumerator ExchangeMessage()
@@ -30,6 +34,12 @@ public class NetworkClient : MonoBehaviour {
             yield return new WaitForSeconds(pollSeconds);
             RequestResponse();
         }        
+    }
+
+    public void Send(string msg)
+    {
+        sendMessage = msg;
+        RequestResponse();
     }
 
 #if !UNITY_EDITOR

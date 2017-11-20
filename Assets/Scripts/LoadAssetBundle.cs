@@ -27,7 +27,7 @@ public class LoadAssetBundle : MonoBehaviour {
         _gameObject = Instantiate(gameObject);
         var childTransform = _gameObject.transform.Find("default");
         childTransform.gameObject.name = objectName;
-        childTransform.gameObject.AddComponent<NavigationAction>().RotationSensitivity = 100f;
+        childTransform.gameObject.AddComponent<NavigationAction>().RotationSensitivity = 50f;
         var fingerPressed = Resources.Load("Sounds/FingerPressed", typeof(AudioClip)) as AudioClip;
         childTransform.gameObject.AddComponent<Interactible>().TargetFeedbackSound = fingerPressed;
 #if UNITY_EDITOR

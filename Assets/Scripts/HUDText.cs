@@ -14,7 +14,11 @@ public class HUDText : Singleton<HUDText>
     public FpsCounterAnchorPositions AnchorPosition = FpsCounterAnchorPositions.TopRight;
 
     private string htmlColorTag;
-    private const string hudLabel = "{0}</color>";
+    private const string hudLabel = "{0}</color>"+
+        "\n<#00FF00>Obj World {1:0.0},{2:0.0},{3:0.0}" +
+        "\n<#00FF00>Obj Local {4:0.0},{5:0.0},{6:0.0}" +
+        "\n<#FF00FF>Head Pos {7:0.0},{8:0.0},{9:0.0}"+
+        "\n<#FF00FF>Head Dir {10:0.0},{11:0.0},{12:0.0}";
 
     private TextMeshPro m_TextMeshPro;
     private Transform m_frameCounter_transform;
@@ -42,7 +46,7 @@ public class HUDText : Singleton<HUDText>
         m_frameCounter_transform.localRotation = Quaternion.identity;
 
         m_TextMeshPro.enableWordWrapping = false;
-        m_TextMeshPro.fontSize = 24;
+        m_TextMeshPro.fontSize = 12;
         //m_TextMeshPro.FontColor = new Color32(255, 255, 255, 128);
         //m_TextMeshPro.edgeWidth = .15f;
         m_TextMeshPro.isOverlay = true;
@@ -74,7 +78,24 @@ public class HUDText : Singleton<HUDText>
         if (timeNow > m_LastInterval + UpdateInterval)
         {
             htmlColorTag = "<color=yellow>";
-            m_TextMeshPro.SetText(htmlColorTag + string.Format(hudLabel, axislabel));
+            if (GazeManager.Instance.Hit)
+            {
+                var p = GazeManager.Instance.Position;
+                var localP = GazeManager.Instance.LocalPosition;
+                var h = GazeManager.Instance.GazeOrigin;
+                var rh = GazeManager.Instance.GazeAngles;
+                m_TextMeshPro.SetText(htmlColorTag + string.Format(hudLabel, axislabel, 
+                    p.z*39.37, -p.x*39.37, p.y*39.37, // converted to SA coords
+                    localP.x/25.4, localP.y/25.4, localP.z/25.4,
+                    h.x*39.37, h.y*39.37, h.z*39.37,
+                    rh.x, rh.y, rh.z
+                    ));
+
+            }
+            else
+            {
+                m_TextMeshPro.SetText(htmlColorTag + string.Format(hudLabel, axislabel, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+            }
             m_LastInterval = timeNow;
         }
     }

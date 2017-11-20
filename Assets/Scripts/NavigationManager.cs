@@ -15,6 +15,7 @@ public class NavigationManager : Singleton<NavigationManager>
     public Vector3 NavigationPosition { get; private set; }
     public bool IsManipulating { get; private set; }
     public Vector3 ManipulationPosition { get; private set; }
+    public bool SendCoordinates = false;
     public float NavigationSpeed;
     private float lastLocation;
 

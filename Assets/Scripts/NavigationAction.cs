@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Menu tagalong...
+// TODO: Popup info graphic triggered by proximity to a given object point
+// TODO: Send transforms to SA
+// TODO: SA Sends instrument location to Hololens
+// TODO: Display tracker in Hololens world
+// TODO: Menu command to level current active rotation axis
 
 public class NavigationAction : MonoBehaviour {
     [Tooltip("Rotation max speed controls amount of rotation.")]
@@ -86,24 +90,35 @@ public class NavigationAction : MonoBehaviour {
     void OnSelect()
     {
         Debug.Log("OnSelect for " + gameObject.name);
-
-        if (GazeManager.Instance.FocusedGameObject == gameObject)
+        if (NavigationManager.Instance.SendCoordinates == false)
         {
-            nextAxis++;
-            nextAxis = nextAxis % 3;
-            Debug.Log("Next axis = " + nextAxis);
-            switch (nextAxis)
+            if (GazeManager.Instance.FocusedGameObject == gameObject)
             {
-                case 0: rotationAxis = RotationAxis.X;
-                    HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "X");
-                    break;
-                case 1: rotationAxis = RotationAxis.Y;
-                    HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "Y");
-                    break;
-                case 2: rotationAxis = RotationAxis.Z;
-                    HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "Z");
-                    break;
+                nextAxis++;
+                nextAxis = nextAxis % 3;
+                Debug.Log("Next axis = " + nextAxis);
+                switch (nextAxis)
+                {
+                    case 0:
+                        rotationAxis = RotationAxis.X;
+                        HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "X");
+                        break;
+                    case 1:
+                        rotationAxis = RotationAxis.Y;
+                        HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "Y");
+                        break;
+                    case 2:
+                        rotationAxis = RotationAxis.Z;
+                        HUDText.Instance.axislabel = string.Format("{0} {1}", gameObject.name, "Z");
+                        break;
+                }
             }
+        }
+        else
+        {
+            var p = GazeManager.Instance.Position;
+            string msg = string.Format("WORLD:{0:0.0},{1:0.0},{2:0.0}", p.z * 39.37, -p.x * 39.37, p.y * 39.37);
+            NetworkClient.Instance.Send(msg);
         }
     }
 }
