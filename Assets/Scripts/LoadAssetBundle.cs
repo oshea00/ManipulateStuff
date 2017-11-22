@@ -33,7 +33,7 @@ public class LoadAssetBundle : MonoBehaviour {
 #if UNITY_EDITOR
         childTransform.gameObject.AddComponent<MouseLook>();
 #endif
-        Material newMat = Resources.Load("Blue", typeof(Material)) as Material;
+        Material newMat = Resources.Load("Blue2", typeof(Material)) as Material;
         var renderer = childTransform.gameObject.GetComponent<Renderer>();
         renderer.material = newMat;
         _gameObject.transform.position = position;
